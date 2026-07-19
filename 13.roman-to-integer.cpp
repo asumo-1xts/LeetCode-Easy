@@ -12,51 +12,49 @@
 using namespace std;
 
 class Solution {
-    int iter = 0;
-
    public:
     int romanToInt(string s) {
-        int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
+        int ans = 0;
+        int iter = 0;
+        int prev = 0;
 
-        // ========== 千の位の処理 ===========
-        while (s[iter] == 'M') {
-            n1++;
-            iter++;
-        }
+        while (iter < s.size()) {
+            int curr = 0;
+            switch (s[s.size() - 1 - iter]) {
+                case 'I':
+                    curr = 1;
+                    break;
+                case 'V':
+                    curr = 5;
+                    break;
+                case 'X':
+                    curr = 10;
+                    break;
+                case 'L':
+                    curr = 50;
+                    break;
+                case 'C':
+                    curr = 100;
+                    break;
+                case 'D':
+                    curr = 500;
+                    break;
+                case 'M':
+                    curr = 1000;
+                    break;
+                default:
+                    break;
+            }
 
-        // ========== 百、十、一の位の処理 ===========
-        n2 = getDigit(s, 'C', 'D', 'M');
-        n3 = getDigit(s, 'X', 'L', 'C');
-        n4 = getDigit(s, 'I', 'V', 'X');
-
-        return n1 * 1000 + n2 * 100 + n3 * 10 + n4;
-    }
-
-   private:
-    int getDigit(const string &s, char one, char five, char ten) {
-        int n = 0;
-        if (s[iter] == one) {
-            if (s[iter + 1] == ten) {
-                n = 9;
-                iter += 2;
-            } else if (s[iter + 1] == five) {
-                n = 4;
-                iter += 2;
+            if (prev <= curr) {
+                ans += curr;
             } else {
-                while (s[iter] == one) {
-                    n++;
-                    iter++;
-                }
+                ans -= curr;
             }
-        } else if (s[iter] == five) {
-            n = 5;
+            prev = curr;
             iter++;
-            while (s[iter] == one) {
-                n++;
-                iter++;
-            }
         }
-        return n;
+        return ans;
     }
 };
 
