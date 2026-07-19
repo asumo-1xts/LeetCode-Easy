@@ -21,7 +21,6 @@ class Solution {
         sort(nums.begin(), nums.end());  // 昇順にソート
         int left = 0;
         int right = nums.size() - 1;
-
         while (left < right) {
             if (nums[left] + nums[right] < target) {
                 left++;
