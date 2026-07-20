@@ -22,53 +22,29 @@ class Solution {
             return nullptr;
         }
 
-        // ========== 一般的な処理 ==========
-
+        // ========== 一般的な処理 =========
         ListNode* answer = new ListNode();
-        ListNode* head = answer;  // 最初のノードを保持するためのポインタ
-        // head ... ( answer ...
-        // この先はanswerが勝手に更新するので、最終的にheadを返す）
+        ListNode* head = answer;  // answerの先頭を保持しておく
 
         while (list1 != nullptr && list2 != nullptr) {
             if (list1->val < list2->val) {
-                answer->val = list1->val;
+                answer->next = list1;
                 list1 = list1->next;
             } else {
-                answer->val = list2->val;
+                answer->next = list2;
                 list2 = list2->next;
             }
-            answer->next = new ListNode();  // 次のノードを作成
             answer = answer->next;
         }
 
-        if (list1 == nullptr) {
-            while (1) {
-                answer->val = list2->val;
-                list2 = list2->next;
-
-                if (list2 != nullptr) {
-                    answer->next = new ListNode();  // 次のノードを作成
-                    answer = answer->next;
-                } else {
-                    break;
-                }
-            }
+        if (list1 != nullptr) {
+            answer->next = list1;
         } else {
-            while (1) {
-                answer->val = list1->val;
-                list1 = list1->next;
-
-                if (list1 != nullptr) {
-                    answer->next = new ListNode();  // 次のノードを作成
-                    answer = answer->next;
-                } else {
-                    break;
-                }
-            }
+            answer->next = list2;
         }
 
-        return head;
-    };
+        return head->next;
+    }
 };
 
 // @lc code=end
