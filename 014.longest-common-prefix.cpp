@@ -21,8 +21,11 @@ class Solution {
 
             while (curr != next) {
                 if (curr.size() > next.size()) {
-                    curr.pop_back();
+                    curr = curr.substr(0, next.size());
+                } else if (curr.size() < next.size()) {
+                    next = next.substr(0, curr.size());
                 } else {
+                    curr.pop_back();
                     next.pop_back();
                 }
             }
